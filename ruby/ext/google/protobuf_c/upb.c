@@ -1610,15 +1610,9 @@ bool upb_strtable_insert3(upb_strtable *t, const char *k, size_t len,
   return true;
 }
 
-#include <stdlib.h>
-
 bool upb_strtable_lookup2(const upb_strtable *t, const char *key, size_t len,
                           upb_value *v) {
   uint32_t hash = upb_murmur_hash2(key, len, 0);
-  void *buffer = malloc(len);
-  memcpy(buffer, key, len);
-  hash = upb_murmur_hash2(buffer, len, 0);
-  free(buffer);
   return lookup(&t->t, strkey2(key, len), v, hash, &streql);
 }
 
